@@ -13,7 +13,7 @@
 		
 		?>
 		<script type="text/javascript">
-			$('div.elgg-owner-block div.elgg-image-block').append("<div id='<?php echo $id; ?>'><?php echo $status;?></div>");
+			//$('div.elgg-owner-block div.elgg-image-block').append("<div id='<?php echo $id; ?>'><?php echo $status;?></div>");
 		</script>
 		<?php 
 	}

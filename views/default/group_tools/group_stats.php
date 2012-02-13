@@ -13,7 +13,7 @@
 		
 		?>
 		<script type="text/javascript">
-			$('div.groups-stats').append("<p id='<?php echo $id; ?>'><?php echo $status;?></p>");
+			//$('div.groups-stats').append("<p id='<?php echo $id; ?>'><?php echo $status;?></p>");
 		</script>
 		<?php 
 	}
