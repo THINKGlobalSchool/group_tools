@@ -1,8 +1,6 @@
 <?php 
 
-	global $CONFIG;
-
-	$group = $vars["entity"];
+	$group = elgg_extract("entity", $vars);
 	$user = elgg_get_logged_in_user_entity();
 	
 	if(!empty($group) && ($group instanceof ElggGroup) && !empty($user)){
@@ -46,7 +44,7 @@
 		 		}
 		 		
 		 		if(!empty($friends)){
-		 			$friends_block .= "<optgroup label='" . elgg_echo("friends") . "'>\n";
+		 			$friends_block = "<optgroup label='" . elgg_echo("friends") . "'>\n";
 			 		
 		 			foreach($friends as $friend){
 		 				if($group->getOwnerGUID() != $friend->getGUID()){
@@ -64,7 +62,7 @@
 		 		}
 		 		
 		 		if(!empty($members)){
-		 			$members_block .= "<optgroup label='" . elgg_echo("groups:members") . "'>\n";
+		 			$members_block = "<optgroup label='" . elgg_echo("groups:members") . "'>\n";
 			 		
 		 			foreach($members as $member){
 		 				if(($group->getOwnerGUID() != $member->getGUID()) && ($user->getGUID() != $member->getGUID())){
@@ -104,12 +102,3 @@
 			
 		}
 	}
-
-?>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#group_tools_admin_transfer_form').submit(function(){
-			return confirm("<?php echo elgg_echo("group_tools:admin_transfer:confirm"); ?>");
-		});
-	});
-</script>

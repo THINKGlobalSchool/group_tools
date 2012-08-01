@@ -10,6 +10,9 @@
 		'group_tools:remove' => "Remove",
 		'group_tools:clear_selection' => "Clear selection",
 		'group_tools:all_members' => "All members",
+		'group_tools:explain' => "Explanation",
+		
+		'group_tools:default:access:group' => "Group members only",
 		
 		'group_tools:joinrequest:already' => "Revoke membership request",
 		'group_tools:joinrequest:already:tooltip' => "You already requested to join this group, click here to revoke this request",
@@ -19,6 +22,13 @@
 		'group_tools:menu:invitations' => "Manage invitations",
 		
 		// plugin settings
+		'group_tools:settings:invite:title' => "Group invitation options",
+		'group_tools:settings:management:title' => "General group options",
+		'group_tools:settings:default_access:title' => "Default group access",
+	
+		'group_tools:settings:admin_create' => "Limit the creation of groups to Site administrators",
+		'group_tools:settings:admin_create:description' => "Setting this to 'Yes' will make the creation of a new group impossible for a normal user of your site.",
+		
 		'group_tools:settings:admin_transfer' => "Allow group owner transfer",
 		'group_tools:settings:admin_transfer:admin' => "Site admin only",
 		'group_tools:settings:admin_transfer:owner' => "Group owners and site admins",
@@ -32,6 +42,9 @@
 		'group_tools:settings:mail' => "Allow group mail (allows group admins to send a message to all members)",
 		
 		'group_tools:settings:listing' => "Default group listing tab",
+		
+		'group_tools:settings:default_access' => "What should be the default access for content in the groups of this site",
+		'group_tools:settings:default_access:disclaimer' => "<b>DISCLAIMER:</b> this will not work unless you have <a href='https://github.com/Elgg/Elgg/pull/253' target='_blank'>https://github.com/Elgg/Elgg/pull/253</a> applied to your Elgg installation.",
 		
 		'group_tools:settings:search_index' => "Allow closed groups to be indexed by search engines",
 		'group_tools:settings:auto_notification' => "Automatically enable group notification on group join",
@@ -105,6 +118,36 @@ To visit the group please click on the following link:
 	
 		'group_tools:multiple_admin:group_tool_option' => "Enable group admins to assign other group admins",
 
+		// cleanup options
+		'group_tools:cleanup:title' => "Group sidebar cleanup",
+		'group_tools:cleanup:description' => "Cleanup the sidebar of the group. This will have no effect for the group admins.",
+		'group_tools:cleanup:owner_block' => "Limit the owner block",
+		'group_tools:cleanup:owner_block:explain' => "The owner block can be found at the top of the sidebar, some extra links can be posted in this area (example: RSS links).",
+		'group_tools:cleanup:actions' => "Do you want to allow users to join this group",
+		'group_tools:cleanup:actions:explain' => "Depending on your group setting, users can directly join the group or request membership.",
+		'group_tools:cleanup:menu' => "Hide side menu items",
+		'group_tools:cleanup:menu:explain' => "Hide the menu links to the different group tools. The users will only be able to get access to the group tools by using the group widgets.",
+		'group_tools:cleanup:members' => "Hide the group members",
+		'group_tools:cleanup:members:explain' => "On the group profile page a list of the group members can be found at the highlighted section. You can choose to hide this list.",
+		'group_tools:cleanup:search' => "Hide the search in group",
+		'group_tools:cleanup:search:explain' => "On the group profile page a search box is available. You can choose to hide this.",
+		'group_tools:cleanup:featured' => "Show featured groups in the sidebar",
+		'group_tools:cleanup:featured:explain' => "You can choose to show a list of featured groups at the highlighted section on the group profile page",
+		'group_tools:cleanup:featured_sorting' => "How to sort featured groups",
+		'group_tools:cleanup:featured_sorting:time_created' => "Newest first",
+		'group_tools:cleanup:featured_sorting:alphabetical' => "Alphabetical",
+
+		// group default access
+		'group_tools:default_access:title' => "Group default access",
+		'group_tools:default_access:description' => "Here you can control what the default access of new content in your group should be.",
+		
+		// group notification
+		'group_tools:notifications:title' => "Group notifications",
+		'group_tools:notifications:description' => "This group has %s members, of those %s have enabled notifications on activity in this group. Below you can change this for all users of the group.",
+		'group_tools:notifications:disclaimer' => "With large groups this could take a while.",
+		'group_tools:notifications:enable' => "Enable notifications for everyone",
+		'group_tools:notifications:disable' => "Disable notifications for everyone",
+		
 		// group profile widgets
 		'group_tools:profile_widgets:title' => "Show group profile widgets to non members",
 		'group_tools:profile_widgets:description' => "This is a closed group. Default no widgets are shown to non members. Here you can configure if you whish to change that.",
@@ -127,8 +170,12 @@ To visit the group please click on the following link:
 		'group_tools:groups:invite:title' => "Invite users to this group",
 		'group_tools:groups:invite' => "Invite users",
 		
+		'group_tools:group:invite:friends:select_all' => "Select all friends",
+		'group_tools:group:invite:friends:deselect_all' => "Deselect all friends",
+		
 		'group_tools:group:invite:users' => "Find user(s)",
-		'group_tools:group:invite:users:description' => "Enter a name or username of a member and select him/her from the list",
+		'group_tools:group:invite:users:description' => "Enter a name or username of a site member and select him/her from the list",
+		'group_tools:group:invite:users:all' => "Invite all site members to this group",
 		
 		'group_tools:group:invite:email' => "Using e-mail address",
 		'group_tools:group:invite:email:description' => "Enter a valid e-mail address and select it from the list",
@@ -203,41 +250,72 @@ To visit the group please click on the following link:
 		// group fix auto_join
 		'group_tools:action:fix_auto_join:success' => "Group membership fixed: %s new members, %s were already a member and %s failures",
 		
-	);
+		// group cleanup
+		'group_tools:actions:cleanup:success' => "The cleanup settings were saved successfully",
+		
+		// group default access
+		'group_tools:actions:default_access:success' => "The default access for the group was saved successfully",
+		
+		// group notifications
+		'group_tools:action:notifications:error:toggle' => "Invalid toggle option",
+		'group_tools:action:notifications:success:disable' => "Successfully disabled notifications for every member",
+		'group_tools:action:notifications:success:enable' => "Successfully enabled notifications for every member",
 	
-	add_translation("en", $english);
-
-	$group_river_widget = array(
+		// Widgets
+		// Group River Widget
 		'widgets:group_river_widget:title' => "Group activity",
 	    'widgets:group_river_widget:description' => "Shows the activity of a group in a widget",
-	
+
 	    'widgets:group_river_widget:edit:num_display' => "Number of activities",
 		'widgets:group_river_widget:edit:group' => "Select a group",
 		'widgets:group_river_widget:edit:no_groups' => "You need to be a member of at least one group to use this widget",
 
 		'widgets:group_river_widget:view:not_configured' => "This widget is not yet configured",
-	
+
 		'widgets:group_river_widget:view:more' => "Activity in the '%s' group",
 		'widgets:group_river_widget:view:noactivity' => "We could not find any activity.",
-	
- 	);
-
-  	add_translation("en", $group_river_widget);
-  	
-  	$group_members_widget = array(
-  		'widgets:group_members:title' => "Group members",
+		
+		// Group Members
+		'widgets:group_members:title' => "Group members",
   		'widgets:group_members:description' => "Shows the members of this group",
-  		
+
   		'widgets:group_members:edit:num_display' => "How many members to show",
   		'widgets:group_members:view:no_members' => "No group members found",
-  	);
-  	
-  	add_translation("en", $group_members_widget);
+  		
+  		// Group Invitations
+		'widgets:group_invitations:title' => "Group invitations",
+	  	'widgets:group_invitations:description' => "Shows the outstanding group invitations for the current user",
+	  	
+	  	// Discussion
+		"widgets:discussion:settings:group_only" => "Only show discussions from groups you are member of",
+  		'widgets:discussion:more' => "View more discussions",
+  		"widgets:discussion:description" => "Shows the latest discussions",
+  		
+		// Forum topic widget
+		'widgets:group_forum_topics:description' => "Show the latest discussions",
+		
+		// index_groups
+		'widgets:index_groups:description' => "Show the latest groups on your community",
+		'widgets:index_groups:show_members' => "Show members count",
+		'widgets:index_groups:featured' => "Show only featured groups",
+		
+		// Featured Groups
+		'widgets:featured_groups:description' => "Shows a random list of featured groups",
+	  	'widgets:featured_groups:edit:show_random_group' => "Show a random non-featured group",
+	  	
+		// group_news widget
+		"widgets:group_news:title" => "Group News", 
+		"widgets:group_news:description" => "Shows latest 5 blogs from various groups", 
+		"widgets:group_news:no_projects" => "No groups configured", 
+		"widgets:group_news:no_news" => "No blogs for this group", 
+		"widgets:group_news:settings:project" => "Group", 
+		"widgets:group_news:settings:no_project" => "Select a group",
+		"widgets:group_news:settings:blog_count" => "Max number of blogs",
+		"widgets:group_news:settings:group_icon_size" => "Group icon size",
+		"widgets:group_news:settings:group_icon_size:small" => "Small",
+		"widgets:group_news:settings:group_icon_size:medium" => "Medium",
+		
+	);
 	
-  	$group_invitations_widget = array(
-  		'widgets:group_invitations:title' => "Group invitations",
-  		'widgets:group_invitations:description' => "Shows the outstanding group invitations for the current user",
-  	);
-  	
-  	add_translation("en", $group_invitations_widget);
+	add_translation("en", $english);
   	

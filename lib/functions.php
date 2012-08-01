@@ -27,19 +27,19 @@
 		$result = false;
 		
 		if(!empty($user) && ($user instanceof ElggUser) && !empty($group) && ($group instanceof ElggGroup) && ($loggedin_user = elgg_get_logged_in_user_entity())){
-			if(!$resend){
-				// Create relationship
-				add_entity_relationship($group->getGUID(), "invited", $user->getGUID());
-			}
+			// Create relationship
+			$relationship = add_entity_relationship($group->getGUID(), "invited", $user->getGUID());
 			
-			// Send email
-			$url = elgg_get_site_url() . "/groups/invitations/" . $user->username;
-			
-			$subject = elgg_echo("groups:invite:subject", array($user->name, $group->name));
-			$msg = elgg_echo("group_tools:groups:invite:body", array($user->name, $loggedin_user->name, $group->name, $text, $url));
-			
-			if(notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg)){
-				$result = true;
+			if($relationship || $resend){
+				// Send email
+				$url = elgg_get_site_url() . "groups/invitations/" . $user->username;
+				
+				$subject = elgg_echo("groups:invite:subject", array($user->name, $group->name));
+				$msg = elgg_echo("group_tools:groups:invite:body", array($user->name, $loggedin_user->name, $group->name, $text, $url));
+				
+				if($res = notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg)){
+					$result = true;
+				}
 			}
 		}
 		
@@ -116,37 +116,7 @@
 					$invite_code)
 				);
 				
-				if(elgg_is_active_plugin("html_email_handler") && (elgg_get_plugin_setting("notifications", "html_email_handler") == "yes")){
-					// generate HTML mail body
-					$html_message = elgg_view("html_email_handler/notification/body", array("title" => $subject, "message" => parse_urls($body)));
-					if(defined("XML_DOCUMENT_NODE")){
-						if($transform = html_email_handler_css_inliner($html_message)){
-							$html_message = $transform;
-						}
-					}
-				
-					// set options for sending
-					$options = array(
-						"to" => $email,
-						"from" => $site_from,
-						"subject" => $subject,
-						"html_message" => $html_message,
-						"plaintext_message" => $body
-					);
-					
-					if(html_email_handler_send_email($options)){
-						$result = true;
-					}
-				} else {
-					// use plaintext mail
-					$headers = "From: " . $site_from . PHP_EOL;
-					$headers .= "X-Mailer: PHP/" . phpversion() . PHP_EOL;
-					$headers .= "Content-Type: text/plain; charset=\"utf-8\"" . PHP_EOL;
-						
-					if(mail($email, $subject, $body, $headers)){
-						$result = true;
-					}
-				}
+				$result = elgg_send_email($site_from, $email, $subject, $body);
 			} else {
 				$result = null;
 			}
@@ -189,5 +159,25 @@
 	}
 	
 	function group_tools_guid_only_callback($row){
-		return $row->guid;
+		return (int) $row->guid;
+	}
+	
+	/**
+	 * Check if group creation is limited to site administrators
+	 * Also this function caches the result
+	 * 
+	 * @return boolean
+	 */
+	function group_tools_is_group_creation_limited(){
+		static $result;
+		
+		if(!isset($result)){
+			$result = false;
+			
+			if(elgg_get_plugin_setting("admin_create", "group_tools") == "yes"){
+				$result = true;
+			}
+		}
+		
+		return $result;
 	}

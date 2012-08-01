@@ -5,11 +5,11 @@ Combines different group additions into one plugin
 1. Features
 2. Replaces
 3. ToDo
+4. Group default access
 
 == 1. Features ==
 - group admin transfer
 - group multiple admin
-- group kick
 - group activity (profile,dashboard,index,group widget)
 	- can show more than one group activity
 	- has support for river_comments and like
@@ -31,7 +31,6 @@ Combines different group additions into one plugin
 - group_admin_transfer
 - group_multiple_admin
 - group_mail
-- group_kick
 - groupriver
 
 == 3. ToDo ==
@@ -48,5 +47,16 @@ Combines different group additions into one plugin
 	- better description of options
 - group widgets
 	- group listing on popular
-- group main for group members (group optional)
+	- index widget show member count
+- group mail for group members (group optional)
 - group discussions tools menu item (all discussions) (optional)
+- group open/closed
+	- admin toggle
+	- better CSS (use class instead of id)
+- when group transfer remove group admin (if needed)
+
+== 4. Group default access ==
+As of version 2.3 of this plugin we offer the ability to set a group default access level (like with Site and User), 
+this will however not work if you haven't applied https://github.com/Elgg/Elgg/pull/253 to your Elgg installation.
+
+Hopefully this will be integrated into Elgg core soon, so no modifications will be needed to the Elgg core files.
