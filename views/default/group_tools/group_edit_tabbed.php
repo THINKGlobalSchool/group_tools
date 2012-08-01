@@ -18,11 +18,16 @@
 			)
 		);
 		
+		// Plugin hook to add new tabs
+		//$params = array('group' => elgg_get_page_owner_entity());
+		//$tabs = elgg_trigger_plugin_hook('group_tools:tabs', 'register',  $params, $tabs);
+		
 		foreach($tabs as $name => $tab){
 			$tab["name"] = $name;
 			
 			elgg_register_menu_item("filter", $tab);
 		}
+
 		
 		echo "<div id='group_tools_group_edit_tabbed'>";
 		echo elgg_view_menu("filter", array("sort_by" => "priority", "class" => "elgg-menu-hz"));

@@ -52,7 +52,7 @@
 		elgg_register_widget_type("index_groups", elgg_echo("groups"), elgg_echo("widgets:index_groups:description"), "index", true);
 		
 		// group invitation
-		elgg_register_action("groups/invite", dirname(__FILE__) . "/actions/groups/invite.php");
+		//elgg_register_action("groups/invite", dirname(__FILE__) . "/actions/groups/invite.php");
 		
 		// manage auto join for groups
 		elgg_extend_view("groups/edit", "group_tools/forms/auto_join", 350);

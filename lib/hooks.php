@@ -54,6 +54,7 @@
 					
 					include(dirname(dirname(__FILE__)) . "/pages/groups/membershipreq.php");
 					break;
+				/*
 				case "invite":
 					$result = false;
 					
@@ -61,6 +62,7 @@
 					
 					include(dirname(dirname(__FILE__)) . "/pages/groups/invite.php");
 					break;
+				*/
 				case "mail":
 					$result = false;
 					
@@ -70,6 +72,8 @@
 					break;
 				case "group_invite_autocomplete":
 					$result = false;
+					
+					error_log(dirname(dirname(__FILE__)) . "/procedures/group_invite_autocomplete.php");
 					
 					include(dirname(dirname(__FILE__)) . "/procedures/group_invite_autocomplete.php");
 					break;
