@@ -5,7 +5,8 @@
 	if(!empty($group)){
 		$prefix = "group_tools:cleanup:";
 		
-		if(!$group->canEdit()){
+		// All users, even admins see the cleaned up menu
+		//if(!$group->canEdit()){
 			
 			$owner_block = $group->getPrivateSetting($prefix . "owner_block");
 			$actions = $group->getPrivateSetting($prefix . "actions");
@@ -18,15 +19,16 @@
 				$css .= "display:none;";
 				$css .= "}";
 			}
-			
-			if(($actions == "yes") && elgg_in_context("group_profile")){
+
+			// This needs to be available for owners admins at all times
+			if(($actions == "yes") && elgg_in_context("groups") && !$group->canEdit()){
 				$css .= "ul.elgg-menu-title {";
 				$css .= "display:none;";
 				$css .= "}";
 			}
 			
 			if($menu == "yes"){
-				$css .= "div.elgg-sidebar div.elgg-owner-block div.elgg-body {";
+				$css .= "div.elgg-sidebar div.elgg-owner-block > div.elgg-body {";
 				$css .= "display:none;";
 				$css .= "}";
 			}
@@ -36,7 +38,7 @@
 				echo $css;
 				echo "</style>";
 			}
-		}
+		//}
 		
 		// show featured groups in the sidebar
 		$featured = $group->getPrivateSetting($prefix . "featured");
